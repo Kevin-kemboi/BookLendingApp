@@ -1,0 +1,23 @@
+<div class="min-h-screen py-6 flex flex-col sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full px-4">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <h1 class="text-2xl font-bold mb-4">Edit Book</h1>
+      <%= form_with model: @book, class: "space-y-4" do |form| %>
+        <%= form.label :title, class: "block text-gray-700" %>
+        <%= form.text_field :title, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition", required: true %>
+        
+        <%= form.label :author, class: "block text-gray-700" %>
+        <%= form.text_field :author, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition", required: true %>
+        
+        <%= form.label :isbn, class: "block text-gray-700" %>
+        <%= form.text_field :isbn, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition", required: true %>
+        
+        <%= form.label :image_url, "Image URL", class: "block text-gray-700" %>
+        <%= form.text_field :image_url, class: "w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition", placeholder: "https://example.com/book-image.jpg" %>
+        
+        <%= form.submit "Update Book", class: "bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded transition" %>
+      <% end %>
+      <%= link_to "Back", books_path, class: "mt-4 inline-block text-purple-600 hover:text-purple-800 transition" %>
+    </div>
+  </div>
+</div>

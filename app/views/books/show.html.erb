@@ -1,0 +1,77 @@
+<div class="flex flex-col min-h-screen bg-zinc-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+  <!-- Header -->
+  <header class="shadow-lg">
+    <div class="bg-gradient-to-r from-zinc-800 via-gray-700 to-zinc-900 text-white">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-serif font-bold tracking-wider uppercase"><%= @book.title %></h1>
+        <%= link_to "Back to Books", books_path, class: "text-gray-300 hover:text-white font-serif transition-colors" %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12 flex-grow">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div>
+        <% if @book.image_url.present? %>
+          <img src="<%= @book.image_url %>" alt="<%= @book.title %>" class="w-full max-w-xs h-auto object-cover rounded-md shadow-lg animate-fade-in">
+        <% else %>
+          <div class="w-full max-w-xs h-64 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-500 text-sm uppercase animate-fade-in">No Image</div>
+        <% end %>
+      </div>
+      
+      <div class="space-y-6">
+        <h2 class="text-xl font-serif font-semibold text-gray-900 dark:text-white uppercase">Book Details</h2>
+        <dl class="space-y-4 text-base">
+          <div>
+            <dt class="text-gray-600 dark:text-gray-400 font-serif uppercase">Author</dt>
+            <dd class="text-gray-900 dark:text-white"><%= @book.author %></dd>
+          </div>
+          <div>
+            <dt class="text-gray-600 dark:text-gray-400 font-serif uppercase">ISBN</dt>
+            <dd class="text-gray-900 dark:text-white"><%= @book.isbn %></dd>
+          </div>
+          <div>
+            <dt class="text-gray-600 dark:text-gray-400 font-serif uppercase">Status</dt>
+            <dd><span class="<%= @book.available? ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' %> font-semibold"><%= @book.available? ? 'Available' : 'Currently Borrowed' %></span></dd>
+          </div>
+          <div>
+            <dt class="text-gray-600 dark:text-gray-400 font-serif uppercase">Times Borrowed</dt>
+            <dd class="text-gray-900 dark:text-white"><%= @book.borrow_count %></dd>
+          </div>
+        </dl>
+        <div class="flex gap-4">
+          <%= link_to "Edit", edit_book_path(@book), class: "text-amber-600 hover:text-amber-800 font-serif transition-colors" %>
+          <%= button_to "Delete", @book, method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800 font-serif transition-colors" %>
+        </div>
+        
+        <% if @book.available? %>
+          <%= form_with model: [@book, Borrowing.new], class: "space-y-4 mt-6" do |form| %>
+            <%= form.label :borrower_name, "Borrower Name", class: "block text-gray-600 dark:text-gray-400 font-serif uppercase" %>
+            <%= form.text_field :borrower_name, class: "w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-600 animate-fade-in", required: true %>
+            <%= form.submit "Borrow Book", class: "bg-gradient-to-r from-amber-600 to-amber-800 text-white font-semibold py-2 px-6 rounded-md hover:from-amber-700 hover:to-amber-900 transition-colors animate-subtle-wiggle" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-xl font-serif font-semibold text-gray-900 dark:text-white uppercase mb-6">Borrowing History</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-gray-900 dark:text-white border-t">
+          <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-800"><tr><th class="px-6 py-3">Borrower</th><th class="px-6 py-3">Borrowed</th><th class="px-6 py-3">Returned</th><th class="px-6 py-3">Actions</th></tr></thead>
+          <tbody>
+            <% @borrowings.each do |borrowing| %>
+              <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="px-6 py-4"><%= borrowing.borrower_name %></td><td class="px-6 py-4"><%= borrowing.borrowed_at.strftime("%Y-%m-%d %H:%M") %></td><td class="px-6 py-4"><%= borrowing.returned_at&.strftime("%Y-%m-%d %H:%M") || "Not returned" %></td><td class="px-6 py-4"><% if borrowing.returned_at.nil? %><%= button_to "Return", borrowing_path(borrowing), method: :patch, class: "text-amber-600 hover:text-amber-800 font-serif transition-colors" %><% end %></td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-zinc-900 to-gray-800 text-white text-center py-6">
+    <p class="font-serif text-sm tracking-wide">© 2025 Library Management. All rights reserved.</p>
+  </footer>
+</div>

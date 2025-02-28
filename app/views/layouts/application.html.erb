@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LibraryAppStyled</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <style>
+    .animate-subtle-bounce {
+      animation: subtleBounce 3s infinite;
+    }
+    .animate-subtle-wiggle {
+      animation: subtleWiggle 2s infinite;
+    }
+    .animate-fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out;
+    }
+    @keyframes subtleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes subtleWiggle {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .transition-colors {
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <% if notice %><p class="mt-4 p-2 bg-green-100 text-green-800 rounded animate-fade-in"><%= notice %></p><% end %>
+    <% if alert %><p class="mt-4 p-2 bg-red-100 text-red-800 rounded animate-fade-in"><%= alert %></p><% end %>
+    <%= yield %>
+  </div>
+</body>
+</html>

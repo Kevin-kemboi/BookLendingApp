@@ -1,0 +1,56 @@
+<div class="flex flex-col min-h-screen bg-zinc-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+  <!-- Header -->
+  <header class="shadow-lg">
+    <div class="bg-gradient-to-r from-zinc-800 via-gray-700 to-zinc-900 text-white">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <img src="https://picsum.photos/48/48?random=1" alt="Library Logo" class="w-12 h-12 rounded-full border-2 border-gray-300 shadow-md animate-subtle-bounce">
+          <span class="text-2xl font-serif font-bold tracking-wider uppercase">Library Books (<%= @total_books %>)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12 flex-grow">
+    <!-- Search Bar -->
+    <div class="relative mb-12">
+      <%= form_with url: books_path, method: :get, class: "flex items-center gap-6" do |form| %>
+        <%= form.text_field :query, placeholder: "Search by title, author, or ISBN", class: "w-full p-4 rounded-md border border-gray-300 bg-white/80 dark:bg-gray-800/80 dark:border-gray-700 text-gray-900 dark:text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-600 animate-fade-in" %>
+        <%= form.submit "Search", class: "bg-gradient-to-r from-amber-600 to-amber-800 text-white font-semibold py-2 px-6 rounded-md hover:from-amber-700 hover:to-amber-900 transition-colors animate-subtle-wiggle" %>
+      <% end %>
+      <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+
+    <!-- Add New Book Button -->
+    <div class="flex justify-center mb-12">
+      <%= link_to "Add New Book", new_book_path, class: "bg-gradient-to-r from-amber-600 to-amber-800 text-white px-8 py-3 rounded-md font-serif font-semibold hover:from-amber-700 hover:to-amber-900 transition-colors animate-subtle-wiggle" %>
+    </div>
+
+    <!-- Books Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <% @books.each do |book| %>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all animate-slide-up cursor-pointer" onclick="window.location.href='<%= book_path(book) %>'">
+          <% if book.image_url.present? %>
+            <img src="<%= book.image_url %>" alt="<%= book.title %>" class="w-full h-32 object-cover rounded-md mb-4">
+          <% else %>
+            <div class="w-full h-32 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-500 text-sm uppercase">No Image</div>
+          <% end %>
+          <h3 class="text-xl font-serif font-semibold text-gray-900 dark:text-white truncate"><%= book.title %></h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400"><%= book.author %></p>
+          <div class="mt-4 flex justify-between items-center">
+            <span class="text-sm <%= book.available? ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' %> font-semibold"><%= book.available? ? 'Available' : 'Borrowed' %></span>
+            <%= link_to "View", book_path(book), class: "text-amber-600 hover:text-amber-800 text-sm font-serif transition-colors" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-zinc-900 to-gray-800 text-white text-center py-6">
+    <p class="font-serif text-sm tracking-wide">© 2025 Library Management. All rights reserved.</p>
+  </footer>
+</div>

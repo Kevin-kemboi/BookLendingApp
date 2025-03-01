@@ -34,9 +34,9 @@ LibraryAppStyled is a modern and elegant **library management system** built wit
 
 | **Page**         | **Preview** |
 |------------------|------------|
-| Index Page      | ![Index](https://github.com/[your-username]/LibraryAppStyled/blob/main/assets/index.png?raw=true) |
-| Book Details    | ![Details](https://github.com/[your-username]/LibraryAppStyled/blob/main/assets/show.png?raw=true) |
-| Add/Edit Book   | ![Form](https://github.com/[your-username]/LibraryAppStyled/blob/main/assets/form.png?raw=true) |
+| Index Page      | ![Image](https://github.com/user-attachments/assets/9cbf949e-450b-467a-938b-589069afd1f4) |
+| Book Details    | ![Image](https://github.com/user-attachments/assets/f7910180-4acd-43fb-b43a-e1570a03a251) |
+| Add/Edit Book   | ![Image](https://github.com/user-attachments/assets/0adce9cb-645b-41f7-a5dd-1e7a9ee78ad3) |
 
 ---
 
